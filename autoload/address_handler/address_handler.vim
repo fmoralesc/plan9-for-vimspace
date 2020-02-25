@@ -17,7 +17,7 @@ function! address_handler#address_handler#Init()
     if !exists("g:plan9#address_handler#gnu_col")
         let g:plan9#address_handler#gnu_col = 1
     endif
-    au! BufReadCmd *:* call address_handler#address_handler#ReadCmd(fnameescape(expand("<amatch>")))
+    au! BufReadCmd *:* ++nested call address_handler#address_handler#ReadCmd(fnameescape(expand("<amatch>")))
 endfunction
 
 function! address_handler#address_handler#ReadCmd(match)
@@ -94,5 +94,6 @@ function! address_handler#address_handler#ReadCmd(match)
     endif
 
     execute "doautocmd BufRead *.".fnamemodify(l:path, ":e")
+    execute "doautocmd BufWinEnter *.".fnamemodify(l:path, ":e")
     filetype detect
 endfunction
